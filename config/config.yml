@@ -1,0 +1,20 @@
+# -*- coding: UTF-8 -*-
+############################################################
+#Description: 
+# config.yml
+# This is a configuration file, changed by this tool maintainer.
+############################################################
+# run_log:  # set the tool log parameters
+#   console_level: logs level that print in the console
+#   file_level: logs level that echo to the file
+#
+run_log:
+    when: D
+    interval: 1
+    backup: 5
+    # canbe debug,info,warning,error,critical
+    console_level: DEBUG 
+    file_level: INFO
+    file_name: hotplug.log
+    err_file_name: hotplug.err
+    pattern: '%(asctime)s - %(name)s - %(threadName)s - %(filename)s  - %(levelname)s - %(message)s'

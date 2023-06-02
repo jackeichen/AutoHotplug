@@ -1,0 +1,9 @@
+*By Gaozh, 2018/11/13
+data_error=(1,10)
+hd=localhost,jvms=1
+
+sd=$sd_name,lun=$lun,range=$range,openflags=directio,hitarea=0,threads=4
+
+wd=wd1,sd=$sd_name,rdpct=30,xfersize=4k,seekpct=100
+
+rd=rd1,wd=wd1,interval=1,iorate=max,elapsed=60

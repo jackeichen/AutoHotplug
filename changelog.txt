@@ -1,0 +1,57 @@
+####################################################################
+Changelog for AutoHotplug, a hotplug test suite.
+####################################################################
+
+Visit https://github.com/jackeichen/AutoHotplug.git to get current development
+versions of AutoHotplug and detailed changes.
+
+Version 0.2.0 20230602
+  Feature:
+  * add manual type for hotplug
+
+Version 0.1.2 20211220
+  Feature:
+  * Should support windows now
+  Limitted:
+  * Windows Do Not support notify hot plug
+  * VDBecnh in windows cannot change rdpct(fix to rdpct=30 ) in "test_4k_randrw_60s"
+
+Version 0.1.1 20211217
+  Feature:
+  * Improve the test process, do multi-test in different threads
+    * now the script can do multi quarch test independently 
+  * Support multi-namespace NVMe SSD
+  * Check needed OS tools
+  * Support hot swap configuration
+    * config 1: All thread do the hot plug independently
+    * config 2: All thread do the hot plug at the same time(a small delay between the hot swap in dirrerent threads: about dozens to hundreds milliseconds delay)
+    * config 4: Hot swap step by step: a thread do hot swap after another thread finish a hotswap(this hot swap must wait the disk disappear or appear) 
+  * fix a bug that occur error when recan a USB disk Or other media 
+
+Version 0.1.0 20211202
+  Feature:
+  * Support Multi Quarch Interface Unit Kit in one test
+  * Support Multi disk in one test
+  * Support Notify-hot-plug & surprise hot-plug
+  * Total 4 test cases with different “IO running”
+    * [25,10,100,500] time interval
+    * Check disk and disk block device in test
+    * Check PCIe width&speed in test
+    * No IO, integrated IO, IO in process support
+    * Cold data and hot data range, and cold data verification
+  * Support Data Verification in case of normal and abnormal power down
+  * Support check DUT hot-plug ability
+  Limit:
+  * Cannot support multi-namespace NVMe SSD OR MACH.2 Disk
+  * Only Linux support now
+  * Cannot support SATA/SAS Disk for now
+  Future:
+  * Tool need to support setting device voltage
+  * Support Windows
+  * Support different disk with Lenovo AnyBay-BackPlane
+  Issue:
+    NA
+
+List of contributors to version 0.* branch:
+  Eric (author)
+################################################################################

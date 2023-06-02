@@ -1,0 +1,3 @@
+quarchpy
+pyyaml
+wmi
