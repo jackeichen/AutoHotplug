@@ -19,7 +19,7 @@ AutoHotplug should work
 
 ## Installing AutoHotplug
 This is a script tool and Do Not need install,
-Get it from http://10.245.27.14/gaoh3/autohotplug.git. \
+Get it from https://github.com/jackeichen/AutoHotplug.git  \
 Windows is not all the same as it was in Linux, you need install quarch device USB driver if 
 you want connect in USB Mode.
 
