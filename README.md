@@ -1,4 +1,4 @@
-## AutoHotplug is an auto-hotplug test script.
+## AutoHotplug is a disk auto-hotplug test script.
 
 
 ## Requirements

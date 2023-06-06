@@ -23,7 +23,7 @@ cmd_exc_check = []
 if sysstr == "Linux":
     cmd_exc_check = ["nvme", "lsblk", "lsscsi", "sg", "java"]
 elif sysstr == "Windows":
-    cmd_exc_check = ["wmic os /?", "PowerShell /?", "java --version"]
+    cmd_exc_check = ["wmic os /?", "PowerShell /?", "java -version"]
 
 ## os.linesep 
 ## os.altsep
