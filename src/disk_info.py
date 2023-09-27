@@ -13,7 +13,7 @@ import threading
 import traceback
 
 from src.lib import subprocess,run_cmd
-from src.pci_lib import map_pci_device
+from src.pciutils.pci_lib import PCIeDevice
 #from src.DiskpartWrapper.WinDiskpartWrapper import WindowsDiskUtility
 from src.script_path import devcon_path
 from src.log_hotplug import logger
@@ -228,8 +228,8 @@ class DiskInfo(object):
             else:
                 raise DiskInfoError("readlink command error")
         elif sysstr == "Windows":
-            ## TODO, windows should not use it, so igive it a dummy value
-            return ["PCIROOT(0)", "PCI(1700)", "RAID(P03T00L00)"]
+            ## TODO, windows should not use it, so i give it a dummy value
+            return None
     
     def get_sata_speed(self):
         """
@@ -260,7 +260,7 @@ class DiskInfo(object):
         ## only for linux pcie device
         slot = None
         if self.interface == 'pcie':
-            pcie_addr = self.pci_links[-1]
+            pcie_addr = self.pci_links[-1] if self.pci_links else None
             if sysstr == "Linux" and pcie_addr:
                 power_slot_dir = "/sys/bus/pci/slots/"
                 for root,dirs,files in os.walk(power_slot_dir, topdown=False):
@@ -326,6 +326,8 @@ class DiskInfo(object):
             cmd = "%s remove %s" % (devcon_path,PNPDeviceID)
             #os.system(cmd)
             '''
+            return 1
+        return 0
     
     @property
     def disk_path(self):
@@ -410,11 +412,8 @@ class DiskInfo(object):
         
     @property
     def disk_pci_config(self):
-        if sysstr == "Linux" and self.interface == "pcie":
-            return map_pci_device(self.pci_links[-1])
-        elif sysstr == "Windows" and self.interface == "pcie":
-            from src.lspci_win import PCIWinLib
-            return PCIWinLib(self.pci_links[-1])
+        if self.pci_links:
+            return PCIeDevice(self.pci_links[-1])
 
     @property
     def sata_speed(self):
@@ -427,22 +426,12 @@ class DiskInfo(object):
     @property
     def pci_hotplug_cap(self):
         # check parent capacity
-        if sysstr == "Linux":
-            if self.interface == 'pcie':
-                parent = self.disk_pci_config.parent
-                return parent.express_slot.hot_plug_cap
-        elif sysstr == "Windows":
-            return "Unkonwn"
+        return True
 
     @property
     def pci_hotplug_surprise(self):
         # check parent capacity
-        if sysstr == "Linux":
-            if self.interface == 'pcie':
-                parent = self.disk_pci_config.parent
-                return parent.express_slot.hot_plug_surprise
-        elif sysstr == "Windows":
-            return "Unkonwn"
+        return True
 
 
 class DiskInfoPool(object):

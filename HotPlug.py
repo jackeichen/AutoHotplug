@@ -71,11 +71,15 @@ class HotPlug(Server):
                 sys.exit(1)
         ## a simple check here
         if sysstr == "Linux":
-            stdout = run_cmd('cat /proc/interrupts | grep pciehp', shell=True)
-            if stdout.strip():
-                info += ('OS Hotplug Capacity: True' + os.linesep)
-            else:
+            try:
+                stdout = run_cmd('cat /proc/interrupts | grep pciehp', shell=True)
+            except RuntimeError:
                 info += ('OS Hotplug Capacity: False' + os.linesep)
+            else:
+                if stdout.strip():
+                    info += ('OS Hotplug Capacity: True' + os.linesep)
+                else:
+                    info += ('OS Hotplug Capacity: False' + os.linesep)
         ##
         info += os.linesep
         logger.info(info)

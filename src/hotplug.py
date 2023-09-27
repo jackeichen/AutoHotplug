@@ -303,15 +303,16 @@ class HotPlugBase(object):
     def periphery_poweroff(self, notify_power=False):
         if notify_power:
             for _disk_info in self._periphery_device.disk_info:
-                _disk_info.set_device_power(power='off')
-            for _disk_info in self._periphery_device.disk_info:
-                disk_id = _disk_info.disk_id
-                # check if disk disappear
-                if self._wait_device_disappear_by_id(disk_id):
-                    logger.error("Disk %s cannot power off by power notify" % disk_id)
-                    raise RuntimeError("Disk %s cannot power off by power notify" % disk_id)
-                else:
-                    logger.debug("Disk %s power off by power notify" % disk_id)
+                res = _disk_info.set_device_power(power='off')
+            if res == 0:
+                for _disk_info in self._periphery_device.disk_info:
+                    disk_id = _disk_info.disk_id
+                    # check if disk disappear
+                    if self._wait_device_disappear_by_id(disk_id):
+                        logger.error("Disk %s cannot power off by power notify" % disk_id)
+                        raise RuntimeError("Disk %s cannot power off by power notify" % disk_id)
+                    else:
+                        logger.debug("Disk %s power off by power notify" % disk_id)
         self._periphery_device.hotswapM_poweroff()
 
     def dump_in_test(self):
@@ -320,8 +321,12 @@ class HotPlugBase(object):
             intf = _disk_info.interface
             if intf == 'pcie':
                 disk_pci_config = _disk_info.disk_pci_config
-                dump_info[_disk_info.disk_id] = {"LinkSpeed": disk_pci_config.express_link.cur_speed,
-                                                 "LinkWidth": disk_pci_config.express_link.cur_width}
+                if disk_pci_config:
+                    dump_info[_disk_info.disk_id] = {"LinkSpeed": disk_pci_config.lspci_vvd.pci_link.speed,
+                                                     "LinkWidth": disk_pci_config.lspci_vvd.pci_link.width}
+                else:
+                    dump_info[_disk_info.disk_id] = {"LinkSpeed": "dummy",
+                                                     "LinkWidth": "dummy"}
             elif intf == 'sata':
                 dump_info[_disk_info.disk_id] = {"LinkSpeed": _disk_info.sata_speed[1]}
             elif intf == 'sas':
@@ -760,7 +765,7 @@ class HotPlugManual(HotPlugBase):
                         return 4
             self._io_cold_data_prepare_flag = True
 
-        ## wait device after setup quarch
+        ## Do Test
         self._wait_device_appear_by_ids(self._get_all_disk_ids())
         for i in range(cycles):
             logger.info("Current loop: %s/%s" % (i+1,cycles))

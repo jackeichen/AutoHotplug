@@ -136,38 +136,6 @@ def pickPcieTarget (deviceStr, mappingMode):
     # Return the device
     return deviceStr
 
-'''
-Checks if the script is runnin under admin permissions
-'''
-def checkAdmin():
-    if platform.system() == 'Windows':
-        if is_winAdmin () == False:
-            print ("ERROR - Script required admin permissions to run!")
-            quit ()
-    else:
-        if is_linuxAdmin () == False:
-            print ("ERROR - Script required root permissions to run!")
-            quit ()
-
-'''
-Checks for a windows admin user
-'''
-def is_winAdmin():
-    try:
-        return ctypes.windll.shell32.IsUserAnAdmin()
-    except:
-        return False
-
-'''
-Checks for a linux admin user
-'''
-def is_linuxAdmin():
-    if os.getuid() == 0:
-        return True
-    else:
-        return False
-
-
 class PCIWinExLink(object):
     def __init__(self):
         self.cur_speed = "Dummy Value"

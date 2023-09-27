@@ -1,8 +1,45 @@
 #
 import os
 import time
+import platform
 import shutil
 import subprocess
+os_type = platform.system()
+
+
+def is_winAdmin():
+    '''
+    Checks for a windows admin user
+    '''
+    try:
+        import ctypes
+        return ctypes.windll.shell32.IsUserAnAdmin()
+    except:
+        return False
+
+def is_linuxAdmin():
+    '''
+    Checks for a linux admin user
+    '''
+    if os.getuid() == 0:
+        return True
+    else:
+        return False
+
+def checkAdmin():
+    '''
+    Checks if the script is runnin under admin permissions
+    '''
+    if os_type == 'Windows':
+        if is_winAdmin () == False:
+            print ("ERROR - Script required admin permissions to run!")
+            quit ()
+    elif os_type == 'Linux':
+        if is_linuxAdmin () == False:
+            print ("ERROR - Script required root permissions to run!")
+            quit ()
+    else:
+        raise RuntimeError("Non-support OS: %s" % os_type)
 
 def sb_convert(target, out_t):
     '''
