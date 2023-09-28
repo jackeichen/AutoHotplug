@@ -1,43 +1,77 @@
-## AutoHotplug is a disk auto-hotplug test script.
+AutoHotplug
+===========
+AutoHotplug is a disk auto-hotplug test script, and no need to install.
 
 
-## Requirements
-AutoHotplug requirements
+Support and Requirements
+========================
+AutoHotplug support bellow OS:
+* Linux
+* Windows
+
+and support bellow Quarch device:
+* QTL2266-xx-xxx (U.2 HotPlug Module)
+* QTL1260-xx-xxx (Control Kit)
+
+AutoHotplug requirements:
 * OS tools
-  * java
   * python3
+  * java
   * smartmontools
-  * Linux tools are required:
+  * Extra Linux tools are required:
     * nvme-cli
     * lsscsi
     * lsblk
+  * Extra Windows tools are required:
+    * wmic
+    * PowerShell
+    * Quarch USB Driver (When use Quarch->USB mode)
 * python3 modules
   * quarchpy
   * pyyaml
+  * Extra Windows modules are required:
+    * wmi
 * Quarch Hardware
   * QTL2266-xx-xxx
-  * QTL1999-xx-xxx
   * QTL1260-xx-xx kit
 
-## Installing AutoHotplug
+
+Installing AutoHotplug
+======================
 This is a script tool and Do Not need install,
 Get it from https://github.com/jackeichen/AutoHotplug.git  \
 Windows is not all the same as it was in Linux, you need install quarch device USB driver if 
-you want connect in USB Mode.
+you want connect Quarch device in USB Mode.
 
-## Running a test
-    An example to test by Quarch control Kit:
-    $ python3 HotPlug.py -i <Quarch Device ConnID>(Example usb:QTL2266-xx-xxx)
+
+Running a test
+==============
+An example to test by Quarch control Kit:
+```
+$ python3 HotPlug.py -i <Quarch Device ConnID>(Example usb:QTL2266-xx-xxx)
+```
     
-    An example to test by Manual:
-    $ python3 HotPlug.py -i manual:<Disk ID> (Disk ID is just a ID, no more important significance, Disk SN is recommended)
+An example to test by Manual:
+```
+$ python3 HotPlug.py -i manual:<Disk ID>
+```
+Disk ID is just a ID, no more important significance, Disk SN is recommended.
 
-## Log File
-The log file included in "LOGS" driectory. Vdbench logs is in "LOGS/vdbenchoutput".
 
-## Help Text
+Configuration File
+==================
+The configuration files are included in "config" directory.
 
-### HotPlug
+
+Log File
+========
+The log file included in "LOGS" directory. Vdbench logs is in "LOGS/vdbenchoutput".
+
+
+Help Text
+=========
+HotPlug
+-------
 ```
 Usage: HotPlug.py [OPTION] or HotPlug.py [OPTION] [args...]
 
