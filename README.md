@@ -2,20 +2,22 @@
 
 
 ## Requirements
-AutoHotplug should work
-* Linux
+AutoHotplug requirements
+* OS tools
   * java
+  * python3
+  * smartmontools
   * Linux tools are required:
     * nvme-cli
     * lsscsi
     * lsblk
-* python3
-  * The following python packages are required:
-    * quarchpy
-    * pyyaml
+* python3 modules
+  * quarchpy
+  * pyyaml
 * Quarch Hardware
   * QTL2266-xx-xxx
   * QTL1999-xx-xxx
+  * QTL1260-xx-xx kit
 
 ## Installing AutoHotplug
 This is a script tool and Do Not need install,
@@ -24,7 +26,11 @@ Windows is not all the same as it was in Linux, you need install quarch device U
 you want connect in USB Mode.
 
 ## Running a test
-    $ python3 HotPlug.py -i <Quarch Device ConnID>(Example usb:QTL2266-02-224)
+    An example to test by Quarch control Kit:
+    $ python3 HotPlug.py -i <Quarch Device ConnID>(Example usb:QTL2266-xx-xxx)
+    
+    An example to test by Manual:
+    $ python3 HotPlug.py -i manual:<Disk ID> (Disk ID is just a ID, no more important significance, Disk SN is recommended)
 
 ## Log File
 The log file included in "LOGS" driectory. Vdbench logs is in "LOGS/vdbenchoutput".
